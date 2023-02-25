@@ -2,6 +2,9 @@
 
 ROS2 packages for the [Roomba-RPi project](https://github.com/process1183/roomba-rpi).
 
+Modified by cameron to run on a raspberry pi 3 with only 1gb of ram.
+
+
 
 ## Dependencies ##
 
@@ -49,7 +52,13 @@ __4.__ Build:
 
 
 ```
-colcon build --symlink-install
+# on my raspberry pi 3 with only 1gb of ram, i set the makeflags thing to -j 2, 
+# so that the compiler will only use two threads. if we dont specify this flag, it will use as many threads
+# as there are cores in the cpu and then it will run out of ram.
+# i added the sequential compiler flag so it only compiles one progam at a time
+
+export MAKEFLAGS="-j 2"
+colcon build --symlink-install --executor sequential
 ```
 
 
